@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const CryptoJS = require('crypto-js');
 
 exports.registerUser = asyncHandler(async (req, res, next) => {
   const { username, email, password, isAdmin } = req.body;
@@ -7,7 +8,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   const newUser = new User({
     username,
     email,
-    password,
+    password: CryptoJS.AES.encrypt(password, process.env.JWT_SECRET),
     isAdmin,
   });
 
