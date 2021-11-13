@@ -5,8 +5,6 @@ const verifyToken = asyncHandler(async (req, res, next) => {
   const authHeader = req.headers.token;
   if (authHeader) {
     const user = await jwt.verify(authHeader, process.env.JWT_SECRET);
-    console.log(`user after JWT decode: `);
-    console.log(user);
     if (user) {
       req.user = user;
       next();
@@ -30,7 +28,6 @@ const verifyTokenAndAuthorization = (req, res, next) => {
 
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
-    console.log(req.user);
     if (req.user.isAdmin) {
       return next();
     } else {
