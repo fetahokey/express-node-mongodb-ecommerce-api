@@ -5,10 +5,16 @@ const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const { notFound, errorHandler } = require("./middleware/error");
 const { json, urlencoded } = express;
+const logger = require("morgan");
 const app = express();
 
 dotenv.config();
 connectDB();
+
+if (process.env.NODE_ENV === "development") {
+  app.use(logger("dev"));
+}
+
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
