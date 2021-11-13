@@ -1,8 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./connect");
-const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const userRouter = require("./routes/users");
+const productRouter = require("./routes/product");
 const { notFound, errorHandler } = require("./middleware/error");
 const { json, urlencoded } = express;
 const logger = require("morgan");
@@ -18,8 +19,9 @@ if (process.env.NODE_ENV === "development") {
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
-app.use("/users", userRouter);
 app.use("/auth", authRouter);
+app.use("/users", userRouter);
+app.use("/products", productRouter);
 
 app.use(notFound);
 app.use(errorHandler);
