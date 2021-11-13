@@ -79,6 +79,18 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   }
 });
 
+// @route GET /auth/
+// @desc get all users
+// @access Private
+exports.getUsers = asyncHandler(async (req, res, next) => {
+  const users = await User.find().select("-password -__v");
+  if (users) {
+    return res.status(200).json({ users: users });
+  } else {
+    return res.status(500).json({ error: "something went worng! " });
+  }
+});
+
 exports.loginUser = asyncHandler(async (req, res, next) => {
   const { email, ...password_ } = req.body;
 
