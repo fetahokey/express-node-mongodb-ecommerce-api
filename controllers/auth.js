@@ -34,7 +34,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
       process.env.JWT_SECRET
     ).toString();
 
-    const updatedUser = await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     userId,
     {
       $set: req.body,
@@ -53,6 +53,32 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   }
 });
 
+// @route DELTE /auth/:id
+// @desc delete user
+// @access Private
+exports.deleteUser = asyncHandler(async (req, res, next) => {
+  const userId = req.params.id;
+  const deleteUser = await User.findByIdAndDelete(userId);
+  if (deleteUser) {
+    return res.status(200).json({ user: deleteUser });
+  } else {
+    return res.status(500).json({ error: "something went worng! " });
+  }
+});
+
+// @route GET /auth/:id
+// @desc get user
+// @access Private
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const userId = req.params.id;
+  const user = await User.findById(userId);
+  if (user) {
+    return res.status(200).json({ user: user });
+  } else {
+    return res.status(500).json({ error: "something went worng! " });
+  }
+});
+
 exports.loginUser = asyncHandler(async (req, res, next) => {
   const { email, ...password_ } = req.body;
 
@@ -66,7 +92,6 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     process.env.JWT_SECRET
   );
   const userPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-  console.log(user);
 
   if (userPassword !== password_.password)
     return res.status(401).json({ error: "Bad Credentials! 1" });
