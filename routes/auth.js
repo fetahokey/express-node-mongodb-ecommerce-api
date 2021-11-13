@@ -5,6 +5,7 @@ const {
   updateUser,
   deleteUser,
   getUser,
+  getUsers
 } = require("../controllers/auth");
 const {
   verifyTokenAndAuthorization,
@@ -17,6 +18,10 @@ router.post("/", validateRegisterUser, registerUser);
 
 // load user
 router.get("/:id", verifyTokenAndAdmin, getUser);
+
+// get all useres
+router.get("/", verifyTokenAndAdmin, getUsers);
+
 
 // update user
 router.put("/:id", verifyTokenAndAuthorization, updateUser);
