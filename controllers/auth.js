@@ -27,7 +27,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 exports.updateUser = asyncHandler(async (req, res, next) => {
   const userId = req.params.id;
   const { password } = req.body;
-  console.log(`userId: ${userId}`);
   if (password)
     req.body.password = CryptoJS.AES.encrypt(
       password,
@@ -86,6 +85,35 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
   const users = await User.find().select("-password -__v");
   if (users) {
     return res.status(200).json({ users: users });
+  } else {
+    return res.status(500).json({ error: "something went worng! " });
+  }
+});
+
+// @route GET /auth/stats
+// @desc get all stats
+// @access Private
+exports.getStats = asyncHandler(async (req, res, next) => {
+  console.log("stats: ");
+  const date = new Date();
+  const lastYear = new Date(date.getFullYear(date.getFullYear() - 1));
+  const stats = await User.aggregate([
+    { $match: { createdAt: { $gte: lastYear } } },
+    {
+      $project: {
+        month: { $month: "$createdAt" },
+      },
+    },
+    {
+      $group: {
+        _id: "$month",
+        total: { $sum: 1 },
+      },
+    },
+  ]);
+
+  if (stats) {
+    return res.status(200).json({ stats });
   } else {
     return res.status(500).json({ error: "something went worng! " });
   }
