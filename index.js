@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./connect");
 const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const orderRouter = require("./routes/order");
 const { notFound, errorHandler } = require("./middleware/error");
 const { json, urlencoded } = express;
 const logger = require("morgan");
@@ -20,6 +21,7 @@ app.use(urlencoded({ extended: false }));
 
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
+app.use("/orders" , orderRouter);
 
 app.use(notFound);
 app.use(errorHandler);

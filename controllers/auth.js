@@ -9,10 +9,14 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   const newUser = new User({
     username,
     email,
-    password: CryptoJS.AES.encrypt(password, process.env.JWT_SECRET),
+    password: CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(password), process.env.JWT_SECRET),
     isAdmin,
   });
 
+  if(!newUser){
+    console.log('hit')
+  }
+  
   const savedUser = await newUser.save();
   if (savedUser) {
     res.status(201).json({ user: savedUser });
