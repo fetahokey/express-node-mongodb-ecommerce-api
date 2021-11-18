@@ -20,7 +20,7 @@ router.post("/", validateRegisterUser, registerUser);
 // load user
 router.get("/:id/user", verifyTokenAndAdmin, getUser);
 
-// get all useres
+// get all users
 router.get("/", verifyTokenAndAdmin, getUsers);
 
 // get stats

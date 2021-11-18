@@ -12,7 +12,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     password: CryptoJS.AES.encrypt(password, process.env.JWT_SECRET),
     isAdmin,
   });
-
+  
   const savedUser = await newUser.save();
   if (savedUser) {
     res.status(201).json({ user: savedUser });
