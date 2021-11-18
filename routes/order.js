@@ -11,21 +11,21 @@ const {verifyTokenAndAuthorization , verifyTokenAndAdmin} = require('../utils/ve
 
 
 
-router.post('/orders' , verifyTokenAndAuthorization, validateCreateOrder , createOrder);
+router.post('/' , verifyTokenAndAuthorization, validateCreateOrder , createOrder);
 
-router.get('/orders/:id' , verifyTokenAndAuthorization, getAnOrder);
+router.get('/:id' , verifyTokenAndAuthorization, getAnOrder);
 
-router.put('/orders/:id', verifyTokenAndAuthorization , validateCreateOrder, updateOrder);
+router.put('/:id', verifyTokenAndAuthorization , validateCreateOrder, updateOrder);
 
-router.delete('/orders/:id' , verifyTokenAndAuthorization, deleteOrder);
+router.delete('/:id' , verifyTokenAndAuthorization, deleteOrder);
 
 //get All orders of a particular user
-router.get('orders/find/:userId', verifyTokenAndAuthorization , getUserOrders);
+router.get('/find/:userId', verifyTokenAndAuthorization , getUserOrders);
 
 // Admin get all orders
-router.get('/orders' , verifyTokenAndAdmin ,getAllOrders);
+router.get('/' , verifyTokenAndAdmin ,getAllOrders);
 
 
-router.get('/orders/income/find',verifyTokenAndAdmin  , getMonthlyIncome);
+router.get('/find/income',verifyTokenAndAdmin  , getMonthlyIncome);
 
 module.exports = router;
