@@ -17,7 +17,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   if (savedUser) {
     res.status(201).json({ user: savedUser });
   } else {
-    res.status(500).json({ error: "something went worng! " });
+    res.status(500).json({ error: "something went wrong! " });
   }
 });
 
@@ -86,7 +86,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
   if (users) {
     return res.status(200).json({ users: users });
   } else {
-    return res.status(500).json({ error: "something went worng! " });
+    return res.status(500).json({ error: "something went wrong! " });
   }
 });
 
