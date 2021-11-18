@@ -21,7 +21,7 @@ app.use(urlencoded({ extended: false }));
 
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
-app.use("/orders" , orderRouter);
+app.use(orderRouter);
 
 app.use(notFound);
 app.use(errorHandler);
